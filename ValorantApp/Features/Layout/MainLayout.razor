@@ -1,0 +1,54 @@
+﻿@inherits LayoutComponentBase
+
+<PageTitle>Valorant App</PageTitle>
+<MudLayout>
+    <MudAppBar>
+        <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" OnClick="@((e) => DrawerToggle())"/>
+        <MudText Typo="Typo.h5">Valorant App</MudText>
+    </MudAppBar>
+    <MudDrawer>
+        <MudNavMenu>
+            <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
+            <MudNavLink Href="/aimtrainer" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Aim Trainer</MudNavLink>
+        </MudNavMenu>
+    </MudDrawer>
+    <MudMainContent Class="mt-2">
+        <ErrorBoundary Context="errorContext" @ref="_errorBoundary">
+            <ChildContent>
+                <MudContainer MaxWidth="MaxWidth.ExtraLarge">
+                    <MudPaper Class="pa-4">
+                        @Body
+                    </MudPaper>
+                </MudContainer>
+            </ChildContent>
+        </ErrorBoundary>
+    </MudMainContent>
+</MudLayout>
+
+<MudThemeProvider @ref="@_mudThemeProvider" @bind-IsDarkMode="@_isDarkMode" />
+<MudSnackbarProvider />
+<MudDialogProvider />
+
+@code 
+{
+    private bool _isDarkMode;
+    private MudThemeProvider? _mudThemeProvider;
+    private ErrorBoundary? _errorBoundary;
+    private bool _drawerOpen;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        _isDarkMode = await _mudThemeProvider!.GetSystemPreference();
+        StateHasChanged();
+    }
+
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+
+    protected override void OnParametersSet()
+    {
+        _errorBoundary?.Recover();
+    }
+}
