@@ -10,4 +10,16 @@
     <PackageReference Include="MudBlazor" Version="6.16.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Features/Pages/Armory.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Features/Pages/Armory.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data/" />
+  </ItemGroup>
+
 </Project>
