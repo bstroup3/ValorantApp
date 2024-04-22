@@ -2,14 +2,14 @@
 
 <PageTitle>Valorant App</PageTitle>
 <MudLayout>
-    <MudAppBar>
+    <MudAppBar Color="Color.Primary">
         <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" OnClick="@((e) => DrawerToggle())"/>
         <MudText Typo="Typo.h5">Valorant App</MudText>
     </MudAppBar>
-    <MudDrawer>
+    <MudDrawer @bind-Open="@_drawerOpen" Variant="@DrawerVariant.Temporary">
         <MudNavMenu>
             <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
-            <MudNavLink Href="/aimtrainer" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Aim Trainer</MudNavLink>
+            <MudNavLink Href="/aimtrainer" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.LocationSearching">Aim Trainer</MudNavLink>
         </MudNavMenu>
     </MudDrawer>
     <MudMainContent Class="mt-2">

@@ -1,6 +1,6 @@
 ﻿namespace ValorantApp.Features.Pages;
 
-public sealed partial class Counter
+public sealed partial class AimTrainer
 {
     private int currentCount = 0;
 

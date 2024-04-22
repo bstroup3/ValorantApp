@@ -1,11 +1,9 @@
+using ValorantApp;
 using ValorantApp.Features;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents();
-
+builder.AddApplicationServices();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -17,7 +15,6 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseStaticFiles();
 app.UseAntiforgery();
 
