@@ -1,10 +1,13 @@
 ﻿@inherits LayoutComponentBase
 
 <PageTitle>Valorant App</PageTitle>
+
 <MudLayout>
     <MudAppBar Color="Color.Primary">
         <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" OnClick="@((e) => DrawerToggle())"/>
         <MudText Typo="Typo.h5">Valorant App</MudText>
+        <MudSpacer/>
+        <MudIconButton Icon="@Icons.Material.Filled.Settings" Href="settings" />
     </MudAppBar>
     <MudDrawer @bind-Open="@_drawerOpen" Variant="@DrawerVariant.Temporary">
         <MudNavMenu>
