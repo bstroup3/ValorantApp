@@ -1,14 +1,13 @@
 ﻿@inherits LayoutComponentBase
-
 <PageTitle>Valorant App</PageTitle>
 
 <MudLayout>
-    <MudAppBar Color="Color.Error">
+    <MudAppBar Style="">
         <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" OnClick="@((e) => DrawerToggle())"/>
         <MudText Typo="Typo.h5">Valorant App</MudText>
     </MudAppBar>
     <MudDrawer @bind-Open="@_drawerOpen" Variant="@DrawerVariant.Temporary">
-        <MudNavMenu>
+        <MudNavMenu Color="Color.Secondary">
             <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
             <MudNavLink Href="/agents" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Person">Agents</MudNavLink>
             <MudNavLink Href="/maps" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Map">Maps</MudNavLink>
@@ -29,7 +28,7 @@
     </MudMainContent>
 </MudLayout>
 
-<MudThemeProvider @ref="@_mudThemeProvider" @bind-IsDarkMode="@_isDarkMode" />
+<MudThemeProvider Theme="@_currentTheme" @ref="@_mudThemeProvider" @bind-IsDarkMode="@_isDarkMode" />
 <MudSnackbarProvider />
 
 @code 
@@ -38,6 +37,15 @@
     private MudThemeProvider? _mudThemeProvider;
     private ErrorBoundary? _errorBoundary;
     private bool _drawerOpen;
+
+    private readonly MudTheme _currentTheme = new()
+    {
+     PaletteDark = new PaletteDark
+     {
+        Secondary = Colors.Red.Accent2,
+        AppbarBackground = Colors.Red.Accent2,
+     },
+    };
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
