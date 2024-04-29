@@ -37,7 +37,7 @@ public class AgentRequestHandler : IRequestHandler<AgentRequest, AgentResponse>
 {
     public async Task<AgentResponse> Handle(AgentRequest request, CancellationToken cancellationToken = default)
     {
-        var fileName = "../Data/PublicContentCatalog.json";
+        var fileName = "Data/PublicContentCatalog.json";
         string json = await File.ReadAllTextAsync(fileName, encoding: Encoding.UTF8);
         var jsonObj = JsonSerializer.Deserialize<Data>(json);
 
