@@ -1,5 +1,5 @@
 ﻿using MudBlazor.Services;
-
+using ValorantApp.Features.Pages;
 namespace ValorantApp;
 
 public static class DependencyInjectionExtentions

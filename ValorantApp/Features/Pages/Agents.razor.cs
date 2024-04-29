@@ -4,9 +4,9 @@ using MediatR;
 using Microsoft.AspNetCore.Components;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
-namespace ValorantApp;
+namespace ValorantApp.Features.Pages;
 
-public sealed partial class Agents : IDisposable
+public partial class Agents : IDisposable
 {
     [Inject] private IMediator Mediator {get; set;} = null;
 
@@ -15,7 +15,7 @@ public sealed partial class Agents : IDisposable
     private AgentResponse _response = new();
     private bool _isLoading;
 
-    protected async Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
         _isLoading = true;
         _response = await Mediator.Send(_request, _cts.Token);
@@ -37,7 +37,7 @@ public class AgentRequestHandler : IRequestHandler<AgentRequest, AgentResponse>
 {
     public async Task<AgentResponse> Handle(AgentRequest request, CancellationToken cancellationToken = default)
     {
-        var fileName = "../../Data/PublicContentCatalog.json";
+        var fileName = "../Data/PublicContentCatalog.json";
         string json = await File.ReadAllTextAsync(fileName, encoding: Encoding.UTF8);
         var jsonObj = JsonSerializer.Deserialize<Data>(json);
 
