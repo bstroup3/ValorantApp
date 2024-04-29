@@ -11,6 +11,7 @@ public static class DependencyInjectionExtentions
         builder.Services.AddRazorComponents()
             .AddInteractiveServerComponents();
         builder.Services.AddMudServices();
+        builder.Services.AddMediatR(config => config.RegisterServicesFromAssemblyContaining<AgentRequestHandler>());
         
     }
 }

@@ -1,23 +1,53 @@
-﻿namespace ValorantApp;
+﻿using System.Text;
+using System.Text.Json;
+using MediatR;
+using Microsoft.AspNetCore.Components;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
-public sealed partial class Agents
+namespace ValorantApp;
+
+public sealed partial class Agents : IDisposable
 {
-    private IEnumerable<Agent>? _agents;
+    [Inject] private IMediator Mediator {get; set;} = null;
+
+    private readonly CancellationTokenSource _cts = new();
+    private readonly AgentRequest _request = new();
+    private AgentResponse _response = new();
+    private bool _isLoading;
+
+    protected async Task OnInitializedAsync()
+    {
+        _isLoading = true;
+        _response = await Mediator.Send(_request, _cts.Token);
+        _isLoading = false;
+    }
+
+    public void Dispose()
+    {
+        _cts.Cancel();
+        _cts.Dispose();
+    }
 }
 
-public class Agent 
+public class AgentRequest : IRequest<AgentResponse>
 {
-    public string? Id { get; set; }
-    public string? Name { get; set; }
-    public string? Description { get; set; }
-    public Ability? Ability1 {get; set; }
-    public Ability? Ability2 {get; set; }
-    public Ability? Ability3 {get; set; }
-    public Ability? Ultimate {get; set; }
 }
 
-public class Ability 
+public class AgentRequestHandler : IRequestHandler<AgentRequest, AgentResponse>
 {
-    public string? Name { get; set; }
-    public string? Description { get; set; }
+    public async Task<AgentResponse> Handle(AgentRequest request, CancellationToken cancellationToken = default)
+    {
+        var fileName = "../../Data/PublicContentCatalog.json";
+        string json = await File.ReadAllTextAsync(fileName, encoding: Encoding.UTF8);
+        var jsonObj = JsonSerializer.Deserialize<Data>(json);
+
+        var agents = jsonObj.Characters;
+
+        return new AgentResponse { Agents = agents };
+    }
+}
+
+public class AgentResponse
+{
+    public IEnumerable<Act> Agents { get; set; } = [];
 }
