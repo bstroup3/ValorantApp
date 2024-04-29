@@ -1,4 +1,4 @@
-﻿namespace ValorantApp
+﻿namespace ValorantApp.Features.Pages
 {
     using System;
     using System.Collections.Generic;
@@ -291,12 +291,12 @@
 
     public partial class Data
     {
-        public static Data FromJson(string json) => JsonConvert.DeserializeObject<Data>(json, ValorantApp.Converter.Settings);
+        public static Data FromJson(string json) => JsonConvert.DeserializeObject<Data>(json, Converter.Settings);
     }
 
     public static class Serialize
     {
-        public static string ToJson(this Data self) => JsonConvert.SerializeObject(self, ValorantApp.Converter.Settings);
+        public static string ToJson(this Data self) => JsonConvert.SerializeObject(self, Converter.Settings);
     }
 
     internal static class Converter

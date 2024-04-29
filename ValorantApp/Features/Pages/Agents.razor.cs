@@ -1,8 +1,7 @@
 ﻿using System.Text;
-using System.Text.Json;
 using MediatR;
 using Microsoft.AspNetCore.Components;
-using JsonSerializer = System.Text.Json.JsonSerializer;
+using ValorantApp.Features.Pages;
 
 namespace ValorantApp.Features.Pages;
 
@@ -39,8 +38,7 @@ public class AgentRequestHandler : IRequestHandler<AgentRequest, AgentResponse>
     {
         var fileName = "Data/PublicContentCatalog.json";
         string json = await File.ReadAllTextAsync(fileName, encoding: Encoding.UTF8);
-        var jsonObj = JsonSerializer.Deserialize<Data>(json);
-
+        var jsonObj = Data.FromJson(json);
         var agents = jsonObj.Characters;
 
         return new AgentResponse { Agents = agents };

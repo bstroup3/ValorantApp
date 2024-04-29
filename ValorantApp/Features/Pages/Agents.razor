@@ -1,13 +1,13 @@
 ﻿@page "/agents"
 @using ValorantApp.Features.Pages;
-@using ValorantApp.Features.Pages.Components;
+@using ValorantApp.Features.Pages.Components.AgentCard;
 
 <MudContainer>
     <MudText Typo="Typo.h5">Agents</MudText>
     <MudGrid>
         @foreach(var agent in @_response.Agents)
         {
-            <AgentCard />
+            <AgentCard Name="" Id=""/>
         }
     </MudGrid>
 
