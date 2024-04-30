@@ -2,7 +2,7 @@
 
 <MudContainer Class="card" Style="height: 25vw; width: 25vw;">
     <MudPaper>
-        <MudImage Src="@picturePath" Style="height: 20vw; width: 20vw;" />
+        <MudImage Src="@PictureUri" Style="height: 20vw; width: 20vw;" />
         <MudPaper Class="d-flex justify-center align-center" Style="margin: 1vw; transform: skew(-40deg);">
             <MudText Typo="Typo.h6" Style="transform: skew(40deg);">@Name</MudText>
         </MudPaper>
@@ -11,8 +11,6 @@
 
 @code
 {
-    [Parameter] public string Id { get; set; }
+    [Parameter] public string PictureUri { get; set; }
     [Parameter] public string Name { get; set; }
-
-    public string picturePath => $"Characters/{@Id}.png";
 }

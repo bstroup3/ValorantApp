@@ -1,6 +1,8 @@
 ﻿using System.Text;
 using MediatR;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Mvc;
+using ValorantApp.Shared;
 
 namespace ValorantApp.Features.Pages;
 
@@ -31,14 +33,11 @@ public class AgentRequest : IRequest<AgentResponse>
 {
 }
 
-public class AgentRequestHandler : IRequestHandler<AgentRequest, AgentResponse>
+public class AgentRequestHandler(IValorantApiService valorantApiService) : IRequestHandler<AgentRequest, AgentResponse>
 {
     public async Task<AgentResponse> Handle(AgentRequest request, CancellationToken cancellationToken = default)
     {
-        var fileName = "Data/PublicContentCatalog.json";
-        string json = await File.ReadAllTextAsync(fileName, encoding: Encoding.UTF8);
-        var jsonObj = Data.FromJson(json);
-        var agents = jsonObj.Characters;
+        var agents = await valorantApiService.GetAgentsAsync(new GetAgentsRequest(), cancellationToken);
 
         return new AgentResponse { Agents = agents };
     }
@@ -46,5 +45,5 @@ public class AgentRequestHandler : IRequestHandler<AgentRequest, AgentResponse>
 
 public class AgentResponse
 {
-    public IEnumerable<Act> Agents { get; set; } = [];
+    public IEnumerable<Agent> Agents { get; set; } = [];
 }

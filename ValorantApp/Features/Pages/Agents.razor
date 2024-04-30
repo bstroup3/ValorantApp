@@ -7,7 +7,7 @@
     <MudGrid>
         @foreach(var agent in @_response.Agents)
         {
-            <AgentCard Name="@agent.Name.DefaultText" Id="@agent.Id"/>
+            <AgentCard Name="@agent.DisplayName" Id="@agent.DisplayIcon.AbsolutePath"/>
         }
     </MudGrid>
 
