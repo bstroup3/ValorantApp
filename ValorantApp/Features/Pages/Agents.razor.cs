@@ -1,7 +1,6 @@
 ﻿using System.Text;
 using MediatR;
 using Microsoft.AspNetCore.Components;
-using ValorantApp.Features.Pages;
 
 namespace ValorantApp.Features.Pages;
 
