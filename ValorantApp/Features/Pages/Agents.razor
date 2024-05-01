@@ -9,7 +9,9 @@
 else
 {
     <MudContainer>
-    <MudText Typo="Typo.h5">Agents</MudText>
+    <MudItem>
+        <MudText Typo="Typo.h5">Agents</MudText>
+    </MudItem>
     <MudGrid>
         @foreach (var agent in @_response.Agents)
             {
