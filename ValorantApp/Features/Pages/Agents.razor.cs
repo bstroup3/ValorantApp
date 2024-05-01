@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
 using ValorantApp.Shared;
+using ValorantApp.Shared.Agents;
 
 namespace ValorantApp.Features.Pages;
 
@@ -48,7 +49,7 @@ public class AgentRequestHandler(IValorantApiService valorantApiService) : IRequ
 {
     public async Task<AgentResponse> Handle(AgentRequest request, CancellationToken cancellationToken = default)
     {
-        var agents = await valorantApiService.GetAgentsAsync(new GetAgentsRequest(), cancellationToken);
+        var agents = await valorantApiService.GetAgentsAsync(new GetDataRequest(), cancellationToken);
         agents = agents.Where(a => !a.DeveloperName.Contains("NPE")).OrderBy(a => a.DisplayName).ToArray(); //removes tutorial Sova
 
         return new AgentResponse { Agents = agents };
@@ -57,5 +58,5 @@ public class AgentRequestHandler(IValorantApiService valorantApiService) : IRequ
 
 public class AgentResponse
 {
-    public IEnumerable<Datum> Agents { get; set; } = [];
+    public IEnumerable<Agent> Agents { get; set; } = [];
 }

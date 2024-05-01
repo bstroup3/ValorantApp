@@ -20,4 +20,8 @@
     <_ContentIncludedByDefault Remove="Features/Pages/Armory.razor" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Shared/Agents/" />
+  </ItemGroup>
+
 </Project>
