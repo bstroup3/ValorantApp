@@ -48,7 +48,7 @@ public class MapRequestHandler(IValorantApiService valorantApiService) : IReques
     public async Task<MapResponse> Handle(MapRequest request, CancellationToken cancellationToken = default)
     {
         var maps = await valorantApiService.GetMapsAsync(new GetDataRequest(), cancellationToken);
-        maps = maps.OrderBy(a => a.DisplayName).ToArray();
+        maps = maps.Where(m => !(m.DisplayName == "The Range")).OrderBy(a => a.DisplayName).ToArray();
 
         return new MapResponse { Maps = maps };
     }

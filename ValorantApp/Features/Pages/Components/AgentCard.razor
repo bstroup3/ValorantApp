@@ -1,9 +1,9 @@
 ﻿@namespace ValorantApp.Features.Pages.Components.AgentCard
 
 <MudContainer Class="card" Style="height: 25vw; width: 25vw;">
-    <MudPaper>
+    <MudPaper Class="d-flex justify-center flex-column align-center">
         <MudImage Src="@PictureUri" Style="height: 20vw; width: 20vw;" />
-        <MudPaper Class="d-flex justify-center align-center" Style="margin: 1vw; transform: skew(-40deg);">
+        <MudPaper Class="d-flex justify-center align-center" Width="80%" Style="margin: 1vw; transform: skew(-40deg);">
             <MudText Typo="Typo.h6" Style="transform: skew(40deg);">@Name</MudText>
         </MudPaper>
     </MudPaper>
