@@ -6,16 +6,18 @@ using Newtonsoft.Json.Converters;
 namespace ValorantApp.Shared;
 public interface IValorantApiService
 {
-    public Task<Agent[]> GetAgentsAsync(GetAgentsRequest request, CancellationToken cancellationToken);
+    public Task<Datum[]> GetAgentsAsync(GetAgentsRequest request, CancellationToken cancellationToken);
 }
 public class ValorantApiService(ValorantApiSettings valorantApiSettings, HttpClient httpClient, CancellationToken cancellationToken = default) : IValorantApiService
 {
-    public async Task<Agent[]> GetAgentsAsync(GetAgentsRequest request, CancellationToken cancellationToken)
+    public async Task<Datum[]> GetAgentsAsync(GetAgentsRequest request, CancellationToken cancellationToken)
     {
         var requestUrl = QueryHelpers.AddQueryString(valorantApiSettings.BaseUrl + $"agents/", nameof(GetAgentsRequest.Limit), request.Limit.ToString());
-        var getAgentResponse = await httpClient.GetFromJsonAsync<GetAgentsResponse>(requestUrl, cancellationToken);
+        //var getAgentResponse = await httpClient.GetFromJsonAsync<GetAgentsResponse>(requestUrl, cancellationToken);
+        var json = await httpClient.GetStringAsync(requestUrl, cancellationToken);
+        var getAgentResponse = GetAgentsResponse.FromJson(json);
 
-        return getAgentResponse!.Agents;
+        return getAgentResponse!.Data;
     }
 }
 
@@ -25,27 +27,21 @@ public class ValorantApiSettings
     public string BaseUrl => "https://valorant-api.com/v1/";
 }
 
-
 public class GetAgentsRequest
 {
     public int Limit { get; set; } = int.MaxValue;
 }
 
-public class GetAgentsResponse
-{
-    public Agent[] Agents { get; set; } = [];
-}
-
-public partial class AgentResponse
+public partial class GetAgentsResponse
 {
     [JsonProperty("status")]
     public long Status { get; set; }
 
     [JsonProperty("data")]
-    public Agent[] Agents { get; set; }
+    public Datum[] Data { get; set; }
 }
 
-public partial class Agent
+public partial class Datum
 {
     [JsonProperty("uuid")]
     public Guid Uuid { get; set; }
@@ -175,14 +171,14 @@ public enum Slot { Ability1, Ability2, Grenade, Passive, Ultimate };
 
 public enum DisplayName { Controller, Duelist, Initiator, Sentinel };
 
-public partial class AgentResponse
+public partial class GetAgentsResponse
 {
-    public static AgentResponse FromJson(string json) => JsonConvert.DeserializeObject<AgentResponse>(json, Converter.Settings);
+    public static GetAgentsResponse FromJson(string json) => JsonConvert.DeserializeObject<GetAgentsResponse>(json, Converter.Settings);
 }
 
 public static class Serialize
 {
-    public static string ToJson(this AgentResponse self) => JsonConvert.SerializeObject(self, Converter.Settings);
+    public static string ToJson(this GetAgentsResponse self) => JsonConvert.SerializeObject(self, Converter.Settings);
 }
 
 internal static class Converter

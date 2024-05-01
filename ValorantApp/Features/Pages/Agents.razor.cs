@@ -18,8 +18,19 @@ public partial class Agents : IDisposable
     protected override async Task OnInitializedAsync()
     {
         _isLoading = true;
+    try
+    {
         _response = await Mediator.Send(_request, _cts.Token);
+    }
+    catch (Exception ex)
+    {
+        // Handle any errors here, e.g., logging or displaying an error message
+        Console.WriteLine($"Error fetching data: {ex.Message}");
+    }
+    finally
+    {
         _isLoading = false;
+    }
     }
 
     public void Dispose()
@@ -38,6 +49,7 @@ public class AgentRequestHandler(IValorantApiService valorantApiService) : IRequ
     public async Task<AgentResponse> Handle(AgentRequest request, CancellationToken cancellationToken = default)
     {
         var agents = await valorantApiService.GetAgentsAsync(new GetAgentsRequest(), cancellationToken);
+        agents = agents.Where(a => !a.DeveloperName.Contains("NPE")).OrderBy(a => a.DisplayName).ToArray(); //removes tutorial Sova
 
         return new AgentResponse { Agents = agents };
     }
@@ -45,5 +57,5 @@ public class AgentRequestHandler(IValorantApiService valorantApiService) : IRequ
 
 public class AgentResponse
 {
-    public IEnumerable<Agent> Agents { get; set; } = [];
+    public IEnumerable<Datum> Agents { get; set; } = [];
 }

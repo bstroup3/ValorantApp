@@ -1,14 +1,21 @@
 ﻿@page "/agents"
 @using ValorantApp.Features.Pages;
 @using ValorantApp.Features.Pages.Components.AgentCard;
-
-<MudContainer>
+@if (_isLoading)
+{
+    <MudSkeleton />
+    <MudSkeleton SkeletonType="SkeletonType.Rectangle" Width="20vw" Height="20vw" />
+}
+else
+{
+    <MudContainer>
     <MudText Typo="Typo.h5">Agents</MudText>
     <MudGrid>
-        @foreach(var agent in @_response.Agents)
-        {
-            <AgentCard Name="@agent.DisplayName" Id="@agent.DisplayIcon.AbsolutePath"/>
-        }
-    </MudGrid>
+        @foreach (var agent in @_response.Agents)
+            {
+                <AgentCard Name="@agent.DisplayName" PictureUri="@agent.DisplayIcon.AbsoluteUri" />
+            }
+        </MudGrid>
 
-</MudContainer>
+    </MudContainer>
+}
