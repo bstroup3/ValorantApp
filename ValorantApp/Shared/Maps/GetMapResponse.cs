@@ -10,7 +10,7 @@ public partial class GetMapResponse
     public long Status { get; set; }
 
     [JsonProperty("data")]
-    public Map[] Data { get; set; }
+    public Map[] Data { get; set; } = null!;
 }
 
 public partial class Map
@@ -19,40 +19,40 @@ public partial class Map
     public Guid Uuid { get; set; }
 
     [JsonProperty("displayName")]
-    public string DisplayName { get; set; }
+    public string DisplayName { get; set; } = null!;
 
     [JsonProperty("narrativeDescription")]
-    public object NarrativeDescription { get; set; }
+    public object NarrativeDescription { get; set; } = null!;
 
     [JsonProperty("tacticalDescription")]
     public TacticalDescription? TacticalDescription { get; set; }
 
     [JsonProperty("coordinates")]
-    public string Coordinates { get; set; }
+    public string Coordinates { get; set; } = null!;
 
     [JsonProperty("displayIcon")]
-    public Uri DisplayIcon { get; set; }
+    public Uri DisplayIcon { get; set; } = null!;
 
     [JsonProperty("listViewIcon")]
-    public Uri ListViewIcon { get; set; }
+    public Uri ListViewIcon { get; set; } = null!;
 
     [JsonProperty("listViewIconTall")]
-    public Uri ListViewIconTall { get; set; }
+    public Uri ListViewIconTall { get; set; } = null!;
 
     [JsonProperty("splash")]
-    public Uri Splash { get; set; }
+    public Uri Splash { get; set; } = null!;
 
     [JsonProperty("stylizedBackgroundImage")]
-    public Uri StylizedBackgroundImage { get; set; }
+    public Uri StylizedBackgroundImage { get; set; } = null!;
 
     [JsonProperty("premierBackgroundImage")]
-    public Uri PremierBackgroundImage { get; set; }
+    public Uri PremierBackgroundImage { get; set; } = null!;
 
     [JsonProperty("assetPath")]
-    public string AssetPath { get; set; }
+    public string AssetPath { get; set; } = null!;
 
     [JsonProperty("mapUrl")]
-    public string MapUrl { get; set; }
+    public string MapUrl { get; set; } = null!;
 
     [JsonProperty("xMultiplier")]
     public double XMultiplier { get; set; }
@@ -67,19 +67,19 @@ public partial class Map
     public double YScalarToAdd { get; set; }
 
     [JsonProperty("callouts")]
-    public Callout[] Callouts { get; set; }
+    public Callout[] Callouts { get; set; } = null!;
 }
 
 public partial class Callout
 {
     [JsonProperty("regionName")]
-    public string RegionName { get; set; }
+    public string RegionName { get; set; } = null!;
 
     [JsonProperty("superRegionName")]
     public SuperRegionName SuperRegionName { get; set; }
 
     [JsonProperty("location")]
-    public Location Location { get; set; }
+    public Location Location { get; set; } = null!;
 }
 
 public partial class Location
@@ -97,7 +97,7 @@ public enum TacticalDescription { ABCSites, ABSites };
 
 public partial class GetMapResponse
 {
-    public static GetMapResponse FromJson(string json) => JsonConvert.DeserializeObject<GetMapResponse>(json, Converter.Settings);
+    public static GetMapResponse FromJson(string json) => JsonConvert.DeserializeObject<GetMapResponse>(json, Converter.Settings)!;
 }
 
 public static class Serialize
@@ -124,9 +124,9 @@ internal class SuperRegionNameConverter : JsonConverter
 {
     public override bool CanConvert(Type t) => t == typeof(SuperRegionName) || t == typeof(SuperRegionName?);
 
-    public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
+    public override object ReadJson(JsonReader reader, Type t, object? existingValue, JsonSerializer serializer)
     {
-        if (reader.TokenType == JsonToken.Null) return null;
+        if (reader.TokenType == JsonToken.Null) return null!;
         var value = serializer.Deserialize<string>(reader);
         switch (value)
         {
@@ -146,7 +146,7 @@ internal class SuperRegionNameConverter : JsonConverter
         throw new Exception("Cannot unmarshal type SuperRegionName");
     }
 
-    public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)
+    public override void WriteJson(JsonWriter writer, object? untypedValue, JsonSerializer serializer)
     {
         if (untypedValue == null)
         {
@@ -185,9 +185,9 @@ internal class TacticalDescriptionConverter : JsonConverter
 {
     public override bool CanConvert(Type t) => t == typeof(TacticalDescription) || t == typeof(TacticalDescription?);
 
-    public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
+    public override object ReadJson(JsonReader reader, Type t, object? existingValue, JsonSerializer serializer)
     {
-        if (reader.TokenType == JsonToken.Null) return null;
+        if (reader.TokenType == JsonToken.Null) return null!;
         var value = serializer.Deserialize<string>(reader);
         switch (value)
         {
@@ -199,7 +199,7 @@ internal class TacticalDescriptionConverter : JsonConverter
         throw new Exception("Cannot unmarshal type TacticalDescription");
     }
 
-    public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)
+    public override void WriteJson(JsonWriter writer, object? untypedValue, JsonSerializer serializer)
     {
         if (untypedValue == null)
         {

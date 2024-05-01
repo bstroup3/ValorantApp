@@ -10,7 +10,7 @@ public partial class GetAgentsResponse
     public long Status { get; set; }
 
     [JsonProperty("data")]
-    public Agent[] Data { get; set; }
+    public Agent[] Data { get; set; } = null!;
 }
 
 public partial class Agent
@@ -19,43 +19,43 @@ public partial class Agent
     public Guid Uuid { get; set; }
 
     [JsonProperty("displayName")]
-    public string DisplayName { get; set; }
+    public string DisplayName { get; set; } = null!;
 
     [JsonProperty("description")]
-    public string Description { get; set; }
+    public string Description { get; set; } = null!;
 
     [JsonProperty("developerName")]
-    public string DeveloperName { get; set; }
+    public string DeveloperName { get; set; } = null!;
 
     [JsonProperty("characterTags")]
-    public string[] CharacterTags { get; set; }
+    public string[] CharacterTags { get; set; } = null!;
 
     [JsonProperty("displayIcon")]
-    public Uri DisplayIcon { get; set; }
+    public Uri DisplayIcon { get; set; } = null!;
 
     [JsonProperty("displayIconSmall")]
-    public Uri DisplayIconSmall { get; set; }
+    public Uri DisplayIconSmall { get; set; } = null!;
 
     [JsonProperty("bustPortrait")]
-    public Uri BustPortrait { get; set; }
+    public Uri BustPortrait { get; set; } = null!;
 
     [JsonProperty("fullPortrait")]
-    public Uri FullPortrait { get; set; }
+    public Uri FullPortrait { get; set; } = null!;
 
     [JsonProperty("fullPortraitV2")]
-    public Uri FullPortraitV2 { get; set; }
+    public Uri FullPortraitV2 { get; set; } = null!;
 
     [JsonProperty("killfeedPortrait")]
-    public Uri KillfeedPortrait { get; set; }
+    public Uri KillfeedPortrait { get; set; } = null!;
 
     [JsonProperty("background")]
-    public Uri Background { get; set; }
+    public Uri Background { get; set; } = null!;
 
     [JsonProperty("backgroundGradientColors")]
-    public string[] BackgroundGradientColors { get; set; }
+    public string[] BackgroundGradientColors { get; set; } = null!;
 
     [JsonProperty("assetPath")]
-    public string AssetPath { get; set; }
+    public string AssetPath { get; set; } = null!;
 
     [JsonProperty("isFullPortraitRightFacing")]
     public bool IsFullPortraitRightFacing { get; set; }
@@ -70,16 +70,16 @@ public partial class Agent
     public bool IsBaseContent { get; set; }
 
     [JsonProperty("role")]
-    public Role Role { get; set; }
+    public Role Role { get; set; } = null!;
 
     [JsonProperty("recruitmentData")]
-    public RecruitmentData RecruitmentData { get; set; }
+    public RecruitmentData RecruitmentData { get; set; } = null!;
 
     [JsonProperty("abilities")]
-    public Ability[] Abilities { get; set; }
+    public Ability[] Abilities { get; set; } = null!;
 
     [JsonProperty("voiceLine")]
-    public object VoiceLine { get; set; }
+    public object VoiceLine { get; set; } = null!;
 }
 
 public partial class Ability
@@ -88,13 +88,13 @@ public partial class Ability
     public Slot Slot { get; set; }
 
     [JsonProperty("displayName")]
-    public string DisplayName { get; set; }
+    public string DisplayName { get; set; } = null!;
 
     [JsonProperty("description")]
-    public string Description { get; set; }
+    public string Description { get; set; } = null!;
 
     [JsonProperty("displayIcon")]
-    public Uri DisplayIcon { get; set; }
+    public Uri DisplayIcon { get; set; } = null!;
 }
 
 public partial class RecruitmentData
@@ -130,13 +130,13 @@ public partial class Role
     public DisplayName DisplayName { get; set; }
 
     [JsonProperty("description")]
-    public string Description { get; set; }
+    public string Description { get; set; } = null!;
 
     [JsonProperty("displayIcon")]
-    public Uri DisplayIcon { get; set; }
+    public Uri DisplayIcon { get; set; } = null!;
 
     [JsonProperty("assetPath")]
-    public string AssetPath { get; set; }
+    public string AssetPath { get; set; } = null!;
 }
 
 public enum Slot { Ability1, Ability2, Grenade, Passive, Ultimate };
@@ -145,7 +145,7 @@ public enum DisplayName { Controller, Duelist, Initiator, Sentinel };
 
 public partial class GetAgentsResponse
 {
-    public static GetAgentsResponse FromJson(string json) => JsonConvert.DeserializeObject<GetAgentsResponse>(json, Converter.Settings);
+    public static GetAgentsResponse FromJson(string json) => JsonConvert.DeserializeObject<GetAgentsResponse>(json, Converter.Settings)!;
 }
 
 public static class Serialize
@@ -172,9 +172,9 @@ internal class SlotConverter : JsonConverter
 {
     public override bool CanConvert(Type t) => t == typeof(Slot) || t == typeof(Slot?);
 
-    public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
+    public override object ReadJson(JsonReader reader, Type t, object? existingValue, JsonSerializer serializer)
     {
-        if (reader.TokenType == JsonToken.Null) return null;
+        if (reader.TokenType == JsonToken.Null) return null!;
         var value = serializer.Deserialize<string>(reader);
         switch (value)
         {
@@ -192,7 +192,7 @@ internal class SlotConverter : JsonConverter
         throw new Exception("Cannot unmarshal type Slot");
     }
 
-    public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)
+    public override void WriteJson(JsonWriter writer, object? untypedValue, JsonSerializer serializer)
     {
         if (untypedValue == null)
         {
@@ -228,9 +228,9 @@ internal class DisplayNameConverter : JsonConverter
 {
     public override bool CanConvert(Type t) => t == typeof(DisplayName) || t == typeof(DisplayName?);
 
-    public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
+    public override object ReadJson(JsonReader reader, Type t, object? existingValue, JsonSerializer serializer)
     {
-        if (reader.TokenType == JsonToken.Null) return null;
+        if (reader.TokenType == JsonToken.Null) return null!;
         var value = serializer.Deserialize<string>(reader);
         switch (value)
         {
@@ -246,7 +246,7 @@ internal class DisplayNameConverter : JsonConverter
         throw new Exception("Cannot unmarshal type DisplayName");
     }
 
-    public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)
+    public override void WriteJson(JsonWriter writer, object? untypedValue, JsonSerializer serializer)
     {
         if (untypedValue == null)
         {

@@ -8,12 +8,11 @@ public interface IValorantApiService
     public Task<Agent[]> GetAgentsAsync(GetDataRequest request, CancellationToken cancellationToken);
     public Task<Map[]> GetMapsAsync(GetDataRequest request, CancellationToken cancellationToken);
 }
-public class ValorantApiService(ValorantApiSettings valorantApiSettings, HttpClient httpClient, CancellationToken cancellationToken = default) : IValorantApiService
+public class ValorantApiService(ValorantApiSettings valorantApiSettings, HttpClient httpClient) : IValorantApiService
 {
     public async Task<Agent[]> GetAgentsAsync(GetDataRequest request, CancellationToken cancellationToken)
     {
         var requestUrl = QueryHelpers.AddQueryString(valorantApiSettings.BaseUrl + $"agents/", nameof(GetDataRequest.Limit), request.Limit.ToString());
-        //var getAgentResponse = await httpClient.GetFromJsonAsync<GetAgentsResponse>(requestUrl, cancellationToken);
         var json = await httpClient.GetStringAsync(requestUrl, cancellationToken);
         var getAgentResponse = GetAgentsResponse.FromJson(json);
 

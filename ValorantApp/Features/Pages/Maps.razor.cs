@@ -7,7 +7,7 @@ namespace ValorantApp.Features.Pages;
 
 public partial class Maps : IDisposable
 {
-    [Inject] private IMediator Mediator {get; set;} = null;
+    [Inject] private IMediator Mediator {get; set;} = null!;
 
     private readonly CancellationTokenSource _cts = new();
     private readonly MapRequest _request = new();

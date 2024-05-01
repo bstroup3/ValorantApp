@@ -9,7 +9,7 @@ namespace ValorantApp.Features.Pages;
 
 public partial class Agents : IDisposable
 {
-    [Inject] private IMediator Mediator {get; set;} = null;
+    [Inject] private IMediator Mediator {get; set;} = null!;
 
     private readonly CancellationTokenSource _cts = new();
     private readonly AgentRequest _request = new();
