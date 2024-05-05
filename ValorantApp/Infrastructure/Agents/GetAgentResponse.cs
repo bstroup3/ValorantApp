@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace ValorantApp.Shared.Agents;
+namespace ValorantApp.Infrastructure.Agents;
 
 public partial class GetAgentsResponse
 {

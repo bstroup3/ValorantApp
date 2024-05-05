@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace ValorantApp.Shared.Maps;
+namespace ValorantApp.Infrastructure.Maps;
 
 public partial class GetMapResponse
 {

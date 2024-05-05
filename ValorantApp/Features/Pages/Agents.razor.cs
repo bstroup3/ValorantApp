@@ -1,9 +1,7 @@
-﻿using System.Text;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Mvc;
 using ValorantApp.Shared;
-using ValorantApp.Shared.Agents;
+using ValorantApp.Infrastructure.Agents;
 
 namespace ValorantApp.Features.Pages;
 

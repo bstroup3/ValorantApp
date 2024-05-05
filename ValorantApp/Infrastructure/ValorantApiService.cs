@@ -1,12 +1,14 @@
 ﻿using Microsoft.AspNetCore.WebUtilities;
-using ValorantApp.Shared.Agents;
-using ValorantApp.Shared.Maps;
+using ValorantApp.Infrastructure.Weapons;
+using ValorantApp.Infrastructure.Agents;
+using ValorantApp.Infrastructure.Maps;
 
 namespace ValorantApp.Shared;
 public interface IValorantApiService
 {
     public Task<Agent[]> GetAgentsAsync(GetDataRequest request, CancellationToken cancellationToken);
     public Task<Map[]> GetMapsAsync(GetDataRequest request, CancellationToken cancellationToken);
+    public Task<Weapon[]> GetWeaponsAsync(GetDataRequest request, CancellationToken cancellationToken);
 }
 public class ValorantApiService(ValorantApiSettings valorantApiSettings, HttpClient httpClient) : IValorantApiService
 {
@@ -22,11 +24,19 @@ public class ValorantApiService(ValorantApiSettings valorantApiSettings, HttpCli
     public async Task<Map[]> GetMapsAsync(GetDataRequest request, CancellationToken cancellationToken)
     {
         var requestUrl = QueryHelpers.AddQueryString(valorantApiSettings.BaseUrl + $"maps/", nameof(GetDataRequest.Limit), request.Limit.ToString());
-        //var getAgentResponse = await httpClient.GetFromJsonAsync<GetAgentsResponse>(requestUrl, cancellationToken);
         var json = await httpClient.GetStringAsync(requestUrl, cancellationToken);
         var getMapResponse = GetMapResponse.FromJson(json);
 
         return getMapResponse!.Data;
+    }
+
+    public async Task<Weapon[]> GetWeaponsAsync(GetDataRequest request, CancellationToken cancellationToken)
+    {
+        var requestUrl = QueryHelpers.AddQueryString(valorantApiSettings.BaseUrl + $"weapons/", nameof(GetDataRequest.Limit), request.Limit.ToString());
+        var json = await httpClient.GetStringAsync(requestUrl, cancellationToken);
+        var getWeaponResponse = GetWeaponResponse.FromJson(json);
+
+        return getWeaponResponse!.Data;
     }
 }
 

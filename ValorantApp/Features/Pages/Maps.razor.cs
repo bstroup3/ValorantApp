@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Components;
 using ValorantApp.Shared;
-using ValorantApp.Shared.Maps;
+using ValorantApp.Infrastructure.Maps;
 
 namespace ValorantApp.Features.Pages;
 
