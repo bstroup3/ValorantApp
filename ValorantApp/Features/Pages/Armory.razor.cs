@@ -49,11 +49,30 @@ public class ArmoryRequestHandler(IValorantApiService valorantApiService) : IReq
     {
         var weapons = await valorantApiService.GetWeaponsAsync(new GetDataRequest(), cancellationToken);
 
-        return new ArmoryResponse { Weapons = weapons };
+        var sidearms = weapons.Where(w => w.Category.Contains("Sidearm")).OrderBy(w => w.ShopData.Cost);
+        var shotguns = weapons.Where(w => w.Category.Contains("Shotgun"));
+        var rifles = weapons.Where(w => w.Category.Contains("Rifle"));
+        var smgs = weapons.Where(w => w.Category.Contains("SMG"));
+        var snipers = weapons.Where(w => w.Category.Contains("Sniper"));
+        var heavys = weapons.Where(w => w.Category.Contains("Heavy"));
+
+        return new ArmoryResponse {
+            Sidearms = sidearms,
+            Shotguns = shotguns,
+            Rifles = rifles,
+            Smgs = smgs,
+            Snipers = snipers,
+            Heavys = heavys
+        };
     }
 }
 
 public class ArmoryResponse
 {
-    public IEnumerable<Weapon> Weapons { get; set; } = [];
+    public IEnumerable<Weapon> Sidearms { get; set; } = [];
+    public IEnumerable<Weapon> Shotguns { get; set; } = [];
+    public IEnumerable<Weapon> Rifles { get; set; } = [];
+    public IEnumerable<Weapon> Smgs { get; set; } = [];
+    public IEnumerable<Weapon> Snipers { get; set; } = [];
+    public IEnumerable<Weapon> Heavys { get; set; } = [];
 }
