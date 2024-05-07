@@ -13,15 +13,15 @@ else
     <MudItem Class="d-flex justify-center align-center">
         <MudText Typo="Typo.h3">Armory</MudText>
     </MudItem>
-    <MudGrid Class="d-flex justify-center align-center">
-        <MudPaper Class="d-flex justify-center align-center flex-column" Width="15vw">
+    <MudGrid Class="d-flex justify-center align-center" Style="height:80vh">
+        <MudPaper Class="d-flex justify-center align-center flex-column" Width="15vw" Height="70vh">
             <MudText>SIDEARMS</MudText>
             @foreach (var sidearm in _response.Sidearms)
                 {
                     <WeaponCard Name="@sidearm.DisplayName" PictureUri="@sidearm.DisplayIcon.AbsoluteUri" />
                 }
             </MudPaper>
-            <MudPaper Class="d-flex justify-center align-center flex-column" Width="20vw">
+            <MudPaper Class="d-flex justify-center align-center flex-column" Width="20vw" Height="70vh">
                 <MudItem Class="d-flex justify-center align-center flex-column">
                     <MudText>SMGS</MudText>
                     @foreach (var smg in _response.Smgs)
@@ -37,14 +37,14 @@ else
                     }
                 </MudItem>
             </MudPaper>
-            <MudPaper Class="d-flex justify-center align-center flex-column" Width="20vw">
+            <MudPaper Class="d-flex justify-center align-center flex-column" Width="20vw" Height="70vh">
                 <MudText>RIFLES</MudText>
                 @foreach (var rifle in _response.Rifles)
                 {
                     <WeaponCard Name="@rifle.DisplayName" PictureUri="@rifle.DisplayIcon.AbsoluteUri" />
                 }
             </MudPaper>
-            <MudPaper Class="d-flex justify-center align-center flex-column" Width="20vw">
+            <MudPaper Class="d-flex justify-center align-center flex-column" Width="20vw" Height="70vh">
                 <MudItem Class="d-flex justify-center align-center flex-column">
                     <MudText>SNIPERS</MudText>
                     @foreach (var sniper in _response.Snipers)
