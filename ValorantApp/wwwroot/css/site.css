@@ -4,6 +4,11 @@
     flex-direction: column;
     justify-content: center; 
 }
+.armory_container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+}
 
 .sidearm{
     height: 20%;
@@ -28,7 +33,7 @@
 .armor{
     height: 50%;;
 }
-.card :hover
+.card:hover
 {
     background-color: #ff5252;
 }
