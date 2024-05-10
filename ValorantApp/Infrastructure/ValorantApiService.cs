@@ -2,6 +2,7 @@
 using ValorantApp.Infrastructure.Weapons;
 using ValorantApp.Infrastructure.Agents;
 using ValorantApp.Infrastructure.Maps;
+using ValorantApp.Infrastructure.Armor;
 
 namespace ValorantApp.Shared;
 public interface IValorantApiService
@@ -9,6 +10,7 @@ public interface IValorantApiService
     public Task<Agent[]> GetAgentsAsync(GetDataRequest request, CancellationToken cancellationToken);
     public Task<Map[]> GetMapsAsync(GetDataRequest request, CancellationToken cancellationToken);
     public Task<Weapon[]> GetWeaponsAsync(GetDataRequest request, CancellationToken cancellationToken);
+    public Task<Armor[]> GetArmorAsync(GetDataRequest request, CancellationToken cancellationToken);
 }
 public class ValorantApiService(ValorantApiSettings valorantApiSettings, HttpClient httpClient) : IValorantApiService
 {
@@ -37,6 +39,15 @@ public class ValorantApiService(ValorantApiSettings valorantApiSettings, HttpCli
         var getWeaponResponse = GetWeaponResponse.FromJson(json);
 
         return getWeaponResponse!.Data;
+    }
+
+        public async Task<Armor[]> GetArmorAsync(GetDataRequest request, CancellationToken cancellationToken)
+    {
+        var requestUrl = QueryHelpers.AddQueryString(valorantApiSettings.BaseUrl + $"gear/", nameof(GetDataRequest.Limit), request.Limit.ToString());
+        var json = await httpClient.GetStringAsync(requestUrl, cancellationToken);
+        var getArmorResponse = GetArmorResponse.FromJson(json);
+
+        return getArmorResponse!.Data;
     }
 }
 

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using ValorantApp.Shared;
 using ValorantApp.Infrastructure.Weapons;
+using ValorantApp.Infrastructure.Armor;
 
 namespace ValorantApp.Features.Pages;
 
@@ -48,6 +49,7 @@ public class ArmoryRequestHandler(IValorantApiService valorantApiService) : IReq
     public async Task<ArmoryResponse> Handle(ArmoryRequest request, CancellationToken cancellationToken = default)
     {
         var weapons = await valorantApiService.GetWeaponsAsync(new GetDataRequest(), cancellationToken);
+        var armor = await valorantApiService.GetArmorAsync(new GetDataRequest(), cancellationToken);
 
         var sidearms = weapons.Where(w => w.Category.Contains("Sidearm")).OrderBy(w => w.ShopData.Cost);
         var shotguns = weapons.Where(w => w.Category.Contains("Shotgun"));
@@ -62,7 +64,8 @@ public class ArmoryRequestHandler(IValorantApiService valorantApiService) : IReq
             Rifles = rifles,
             Smgs = smgs,
             Snipers = snipers,
-            Heavys = heavys
+            Heavys = heavys,
+            Armor = armor
         };
     }
 }
@@ -75,4 +78,5 @@ public class ArmoryResponse
     public IEnumerable<Weapon> Smgs { get; set; } = [];
     public IEnumerable<Weapon> Snipers { get; set; } = [];
     public IEnumerable<Weapon> Heavys { get; set; } = [];
+    public IEnumerable<Armor> Armor {get; set; } = [];
 }
