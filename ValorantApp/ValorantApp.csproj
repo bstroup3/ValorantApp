@@ -19,5 +19,11 @@
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Features/Pages/Armory.razor" />
   </ItemGroup>
+  
+    <ItemGroup>
+    <None Update="wwwroot\index.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 
 </Project>
