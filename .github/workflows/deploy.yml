@@ -16,7 +16,7 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v2
       with:
-        dotnet-version: '8.0.x'  # Specify .NET 8
+        dotnet-version: '8.0.x'  # Specify the .NET version you're using
 
     - name: Restore dependencies
       run: dotnet restore
@@ -24,21 +24,14 @@ jobs:
     - name: Build
       run: dotnet publish -c Release -o ./publish
 
-    - name: Verify index.html
-      run: |
-        if [ ! -f ./publish/wwwroot/index.html ]; then
-          echo "index.html not found!"
-          exit 1
-        fi
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./publish/wwwroot  # This is where the Blazor app is published by default
+        publish_branch: gh-pages
 
     - name: Configure base href
       run: |
         cd publish/wwwroot
         sed -i 's|<base href="/" />|<base href="/ValorantApp/" />|' index.html
-
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GH_PAT }}
-        publish_dir: ./publish/wwwroot  # This is where the Blazor app is published by default
-        publish_branch: gh-pages
