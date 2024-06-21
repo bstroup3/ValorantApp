@@ -1,4 +1,4 @@
-name: Build and Deploy Blazor WebAssembly App
+name: Build and Deploy ASP.NET Core Static Site
 
 on:
   push:
@@ -16,7 +16,7 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v2
       with:
-        dotnet-version: '8.0.x'  # Specify the .NET version you're using
+        dotnet-version: '8.0.x'  # Specify .NET 8
 
     - name: Restore dependencies
       run: dotnet restore
@@ -27,11 +27,6 @@ jobs:
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./publish/wwwroot  # This is where the Blazor app is published by default
+        github_token: ${{ secrets.GH_PAT }}
+        publish_dir: ./publish/wwwroot  # This is where the static files are published
         publish_branch: gh-pages
-
-    - name: Configure base href
-      run: |
-        cd publish/wwwroot
-        sed -i 's|<base href="/" />|<base href="/ValorantApp/" />|' index.html
