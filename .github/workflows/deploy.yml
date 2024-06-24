@@ -1,9 +1,9 @@
-name: Build and Deploy ASP.NET Core Static Site
+name: Deploy Blazor Server App to GitHub Pages
 
 on:
   push:
     branches:
-      - main  # Triggers the workflow on pushes to the main branch
+      - main
 
 jobs:
   build-and-deploy:
@@ -13,20 +13,21 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Setup .NET Core
+    - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
-        dotnet-version: '8.0.x'  # Specify .NET 8
+        dotnet-version: '6.0.x'
 
-    - name: Restore dependencies
+    - name: Install Dependencies
       run: dotnet restore
 
-    - name: Build
-      run: dotnet publish -c Release -o ./publish
+    - name: Publish with BlazorPWA
+      run: dotnet publish -c Release -o build_output /p:BlazorPWAEnabled=true
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
-        github_token: ${{secrets.GH_PAT}}
-        publish_dir: ./publish/wwwroot  # This is where the static files are published
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./build_output/wwwroot
         publish_branch: gh-pages
+
